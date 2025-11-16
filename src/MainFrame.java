@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.net.URL;
 
 public class MainFrame extends BaseFrame{
     int dentes1;
@@ -26,6 +27,13 @@ public class MainFrame extends BaseFrame{
 
     public MainFrame(int dentes1, double rpm1, double torque1, int dentes2, double rpm2, double torque2) {
         super("Simulação de Engrenagens", 1300, 800, Color.WHITE);
+
+        //colocar o icone
+        URL url = getClass().getResource("/icon/gearIcon.png");
+            ImageIcon icon = new ImageIcon(url);
+            Image imagemIcone = icon.getImage();
+            this.setIconImage(imagemIcone);
+
 
         this.dentes1 = dentes1;
         this.rpm1 = rpm1;

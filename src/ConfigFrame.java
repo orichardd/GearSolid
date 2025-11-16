@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.net.URL;
 
 public class ConfigFrame extends BaseFrame{
 
@@ -12,6 +13,19 @@ public class ConfigFrame extends BaseFrame{
 
     public ConfigFrame(){
         super("Configuração da Simulação", 400, 500, Color.WHITE);
+
+        //adicionar o icone
+        URL url = getClass().getResource("/icon/gearIcon.png");
+        if (url != null) {
+            // 2. Cria um ImageIcon a partir da URL.
+            ImageIcon icon = new ImageIcon(url);
+
+            // 3. Obtém a imagem (java.awt.Image) do ImageIcon.
+            Image imagemIcone = icon.getImage();
+
+            // 4. Define a imagem como o ícone do Frame.
+            this.setIconImage(imagemIcone);
+        }
 
         //adicionar os inputs de configuraçao
         JLabel textoDentes1 = new JLabel("Dentes Engrenagem 1:");
@@ -50,6 +64,15 @@ public class ConfigFrame extends BaseFrame{
 
             verificarValores(numDentes2Field.getText(), Integer.class);
             dentes2 = Integer.parseInt(numDentes2Field.getText());
+
+            if(dentes1 < 5 || dentes2 < 5){
+                JOptionPane.showMessageDialog(this, "O número de dentes de cada engrenagem deve ser no mínimo 5.");
+                // fecha o frame
+                dispose();
+                // abre novamente
+                new ConfigFrame();
+                return;
+            }
 
 
             iniciarSimulacao();
