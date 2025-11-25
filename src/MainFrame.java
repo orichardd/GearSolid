@@ -218,7 +218,7 @@ public class MainFrame extends BaseFrame {
 
     public void atualizarVelocidadeAngular(){
         velocidadeAngular1 = (rpm1 * (2.0 * Math.PI)) / 60; // rad/s
-        velocidadeAngular2 = (rpm2 * (2.0 * Math.PI)) / 60; // rad/s
+        velocidadeAngular2 = -((rpm2 * (2.0 * Math.PI)) / 60); // rad/s
     }
 
     public void atualizarInformacoes(){
@@ -242,15 +242,13 @@ public class MainFrame extends BaseFrame {
         engrenagem2.atualizarVelocidade(rpm2);
 
 
-        // Recalcula velocidades angulares (rad/s)
-        atualizarVelocidadeAngular();
-
         // --- 4. Update UI Labels ---
         rpm1Label.setText("RPM: " + String.format("%.2f", rpm1));
         rpm2Label.setText("RPM: " + String.format("%.2f", rpm2));
 
         torque1Label.setText("Torque: " + String.format("%.2f", torque1) + " N•m");
         torque2Label.setText("Torque: " + String.format("%.2f", torque2) + " N•m");
+
         // atualizar velocidades angulares
         atualizarVelocidadeAngular();
         velocidadeAngular1Label.setText("Velocidade Angular: " + String.format("%.2f", velocidadeAngular1) + " rad/s");
