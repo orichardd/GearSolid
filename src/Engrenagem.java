@@ -22,7 +22,8 @@ public class Engrenagem {
         this.angulo = angulo;
 
         //conversao de rpm para graus por frame considerando 60 fps
-        this.grausPorFrame = (rpm / 60.0) * (360.0 / 60);
+        double FPS = 60;
+        this.grausPorFrame = (rpm * 360.0) / 60.0 / FPS;
     }
 
     public void atualizarVelocidade(double novoRPM) {

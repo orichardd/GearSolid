@@ -18,9 +18,11 @@ public class MainFrame extends BaseFrame {
     int dentes1;
     double rpm1;
     double torque1;
+    double velocidadeAngular1;
     int dentes2;
     double rpm2;
     double torque2;
+    double velocidadeAngular2;
 
 
     // Valores base para aplicação do slider (calculados pelo Manager/ConfigFrame)
@@ -31,7 +33,18 @@ public class MainFrame extends BaseFrame {
     int rpmSliderValue = 0;
     int torqueSliderValue = 0;
 
-    JLabel engrenagem1Label, dentes1Label, rpm1Label, torque1Label, engrenagem2Label, dentes2Label, rpm2Label, torque2Label;
+    JLabel engrenagem1Label,
+            engrenagem1RaioLabel,
+            dentes1Label,
+            rpm1Label,
+            torque1Label,
+            velocidadeAngular1Label,
+            engrenagem2Label,
+            engrenagem2RaioLabel,
+            dentes2Label,
+            rpm2Label,
+            torque2Label,
+            velocidadeAngular2Label;
 
     /** Calcula o raio de passo R = (N * P) / (2 * PI) */
     private double calcularRaio(int numeroDeDentes){
@@ -51,6 +64,8 @@ public class MainFrame extends BaseFrame {
 
     public MainFrame(int dentes1, double rpm1, double torque1, int dentes2, double rpm2, double torque2) {
         super("Simulação de Engrenagens", 1300, 800, Color.WHITE);
+
+        this.setResizable(true);
 
         //adicionar o icone
         URL url = getClass().getResource("/icon/gearIcon.png");
@@ -132,40 +147,57 @@ public class MainFrame extends BaseFrame {
     }
 
     public void mostrarInformacoes(){
+        // Calcula velocidades angulares iniciais
+        atualizarVelocidadeAngular();
         // Inicializa os labels da classe
         engrenagem1Label = new JLabel("Engrenagem 1");
-        engrenagem1Label.setFont(new Font("Arial", Font.BOLD, 30));
-        dentes1Label = new JLabel("Dentes 1: " + dentes1);
-        rpm1Label = new JLabel("RPM 1: " + String.format("%.2f", rpm1));
-        torque1Label = new JLabel("Torque 1: " + String.format("%.2f", torque1));
+        engrenagem1RaioLabel = new JLabel("Raio: " + String.format("%.2f", engrenagem1.raio) + " cm");
+        dentes1Label = new JLabel("Dentes: " + dentes1);
+        rpm1Label = new JLabel("RPM: " + String.format("%.2f", rpm1));
+        torque1Label = new JLabel("Torque: " + String.format("%.2f", torque1) + " N•m");
+        velocidadeAngular1Label = new JLabel("Velocidade Angular: " + String.format("%.2f", velocidadeAngular1) + " rad/s");
 
         engrenagem2Label = new JLabel("Engrenagem 2");
-        engrenagem2Label.setFont(new Font("Arial", Font.BOLD, 30));
-        dentes2Label = new JLabel("Dentes 2: " + dentes2);
-        rpm2Label = new JLabel("RPM 2: " + String.format("%.2f", rpm2));
-        torque2Label = new JLabel("Torque 2: " + String.format("%.2f", torque2));
+        engrenagem2RaioLabel = new JLabel("Raio: " + String.format("%.2f", engrenagem2.raio) + " cm");
+        dentes2Label = new JLabel("Dentes: " + dentes2);
+        rpm2Label = new JLabel("RPM: " + String.format("%.2f", rpm2));
+        torque2Label = new JLabel("Torque: " + String.format("%.2f", torque2) + " N•m");
+        velocidadeAngular2Label = new JLabel("Velocidade Angular: " + String.format("%.2f", velocidadeAngular2) + " rad/s");
 
         // Engrenagem 1
-        adicionarComponente(engrenagem1Label, 20, 20, 200, 25);
-        adicionarComponente(dentes1Label, 20, 50, 200, 25);
-        adicionarComponente(rpm1Label, 20, 70, 200, 25);
-        adicionarComponente(torque1Label, 20, 90, 200, 25);
+        int yAtual = 20;
+        int pulo = 20;
+        adicionarComponente(engrenagem1Label, 20, yAtual, 200, 25); yAtual += pulo + 30;
+        adicionarComponente(engrenagem1RaioLabel, 20, yAtual, 200, 25); yAtual += pulo;
+        adicionarComponente(dentes1Label, 20, yAtual, 200, 25); yAtual += pulo;
+        adicionarComponente(rpm1Label, 20, yAtual, 400, 25); yAtual += pulo;
+        adicionarComponente(torque1Label, 20, yAtual, 400, 25); yAtual += pulo;
+        adicionarComponente(velocidadeAngular1Label, 20, yAtual, 400, 25); yAtual += pulo;
 
         // Engrenagem 2
-        adicionarComponente(engrenagem2Label, 20, 160, 200, 25);
-        adicionarComponente(dentes2Label, 20, 190, 200, 25);
-        adicionarComponente(rpm2Label, 20, 210, 200, 25);
-        adicionarComponente(torque2Label, 20, 230, 200, 25);
+        yAtual += 50;
+        adicionarComponente(engrenagem2Label, 20, yAtual, 200, 25); yAtual += pulo + 30;
+        adicionarComponente(engrenagem2RaioLabel, 20, yAtual, 200, 25); yAtual += pulo;
+        adicionarComponente(dentes2Label, 20, yAtual, 200, 25); yAtual += pulo;
+        adicionarComponente(rpm2Label, 20, yAtual, 400, 25); yAtual += pulo;
+        adicionarComponente(torque2Label, 20, yAtual, 400, 25); yAtual += pulo;
+        adicionarComponente(velocidadeAngular2Label, 20, yAtual, 400, 25); yAtual += pulo;
+
+        //outras informaçoes
+        yAtual += 50;
+        adicionarComponente(new JLabel("Razão: " + String.format("%.2f", (double)dentes2 / dentes1)), 20, yAtual, 300, 25);
 
         // descrição sliders
         adicionarComponente(new JLabel("Controle de RPM"), 625, 685, 300, 25);
         adicionarComponente(new JLabel("Controle de Torque"), 75, 685, 250, 25);
+
+
     }
 
 
     public void adicionarSlideBar(){
-        JSlider rpmSlider = new JSlider(-300, 300, 0);
-        JSlider torqueSlider = new JSlider(-300, 300, 0);
+        JSlider rpmSlider = new JSlider(-1000, 1000, 0);
+        JSlider torqueSlider = new JSlider(0, 1000, 10);
 
         // RPM Slider listener
         rpmSlider.addChangeListener(e -> {
@@ -182,6 +214,11 @@ public class MainFrame extends BaseFrame {
         // Posicionamento
         adicionarComponente(rpmSlider, 300, 700, 750, 50);
         adicionarComponente(torqueSlider, 20, 700, 220, 50);
+    }
+
+    public void atualizarVelocidadeAngular(){
+        velocidadeAngular1 = (rpm1 * (2.0 * Math.PI)) / 60; // rad/s
+        velocidadeAngular2 = (rpm2 * (2.0 * Math.PI)) / 60; // rad/s
     }
 
     public void atualizarInformacoes(){
@@ -205,12 +242,20 @@ public class MainFrame extends BaseFrame {
         engrenagem2.atualizarVelocidade(rpm2);
 
 
-        // --- 4. Update UI Labels ---
-        rpm1Label.setText("RPM 1: " + String.format("%.2f", rpm1));
-        rpm2Label.setText("RPM 2: " + String.format("%.2f", rpm2));
+        // Recalcula velocidades angulares (rad/s)
+        atualizarVelocidadeAngular();
 
-        torque1Label.setText("Torque 1: " + String.format("%.2f", torque1));
-        torque2Label.setText("Torque 2: " + String.format("%.2f", torque2));
+        // --- 4. Update UI Labels ---
+        rpm1Label.setText("RPM: " + String.format("%.2f", rpm1));
+        rpm2Label.setText("RPM: " + String.format("%.2f", rpm2));
+
+        torque1Label.setText("Torque: " + String.format("%.2f", torque1) + " N•m");
+        torque2Label.setText("Torque: " + String.format("%.2f", torque2) + " N•m");
+        // atualizar velocidades angulares
+        atualizarVelocidadeAngular();
+        velocidadeAngular1Label.setText("Velocidade Angular: " + String.format("%.2f", velocidadeAngular1) + " rad/s");
+        velocidadeAngular2Label.setText("Velocidade Angular: " + String.format("%.2f", velocidadeAngular2) + " rad/s");
+
     }
 
     /** FIX CRUCIAL: Para o timer de animação e fecha a janela. */
@@ -234,6 +279,7 @@ public class MainFrame extends BaseFrame {
         // Constants for simple tooth drawing (derived from TAMANHO_DENTE_PIXEL)
         private final int SHARED_TOOTH_WIDTH = (int)(TAMANHO_DENTE_PIXEL / 2);
         private final int SHARED_TOOTH_HEIGHT = (int)(TAMANHO_DENTE_PIXEL * 0.5);
+
 
         public GearPanel() {
             // Timer para animar (25ms = 40 FPS)
@@ -262,9 +308,7 @@ public class MainFrame extends BaseFrame {
             Graphics2D g2d = (Graphics2D) g;
             g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-            // Desenha o fundo do painel
-            g2d.setColor(Color.WHITE);
-            g2d.fillRect(0, 0, getWidth(), getHeight());
+            setOpaque(false);
 
             // 1. Draw Gear 1 (Red - Driver)
             drawGear(g2d, engrenagem1, Color.DARK_GRAY); // Firebrick

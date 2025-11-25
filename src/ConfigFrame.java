@@ -14,6 +14,8 @@ public class ConfigFrame extends BaseFrame{
     public ConfigFrame(){
         super("Configuração da Simulação", 400, 500, Color.WHITE);
 
+        
+
         //adicionar o icone
         URL url = getClass().getResource("/icon/gearIcon.png");
         if (url == null) {
