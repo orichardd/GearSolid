@@ -165,7 +165,7 @@ public class MainFrame extends BaseFrame {
         torque1Label = new JLabel("Torque: " + String.format("%.2f", torque1) + " N•m");
         velocidades1Label = new JLabel("Velocidades: ");
         velocidadeAngular1Label = new JLabel("Angular: " + String.format("%.2f", velocidadeAngular1) + " rad/s");
-        velocidadeCs1Label = new JLabel("C/s: " + String.format("%.2f", (velocidadeAngular1 * engrenagem1.raio)) + " C/s");
+        velocidadeCs1Label = new JLabel("Linear: " + String.format("%.2f", (velocidadeAngular1 * engrenagem1.raio)) + " Cm/s");
 
         engrenagem2Label = new JLabel("Engrenagem 2");
         engrenagem2RaioLabel = new JLabel("Raio: " + String.format("%.2f", engrenagem2.raio) + " cm");
@@ -174,7 +174,7 @@ public class MainFrame extends BaseFrame {
         torque2Label = new JLabel("Torque: " + String.format("%.2f", torque2) + " N•m");
         velocidades2Label = new JLabel("Velocidades: ");
         velocidadeAngular2Label = new JLabel("Angular: " + String.format("%.2f", velocidadeAngular2) + " rad/s");
-        velocidadeCs2Label = new JLabel("C/s: " + String.format("%.2f", (velocidadeAngular2 * engrenagem2.raio)) + " C/s");
+        velocidadeCs2Label = new JLabel("Linear: " + String.format("%.2f", (velocidadeAngular2 * engrenagem2.raio)) + " Cm/s");
 
         // Engrenagem 1
         int yAtual = 20;
@@ -272,8 +272,8 @@ public class MainFrame extends BaseFrame {
 
         velocidadeAngular1Label.setText("Angular: " + String.format("%.2f", velocidadeAngular1) + " rad/s");
         velocidadeAngular2Label.setText("Angular: " + String.format("%.2f", velocidadeAngular2) + " rad/s");
-        velocidadeCs1Label.setText("C/s: " + String.format("%.2f", (velocidadeAngular1 * engrenagem1.raio)) + " C/s");
-        velocidadeCs2Label.setText("C/s: " + String.format("%.2f", (velocidadeAngular2 * engrenagem2.raio)) + " C/s");
+        velocidadeCs1Label.setText("Linear: " + String.format("%.2f", (velocidadeAngular1 * engrenagem1.raio)) + " Cm/s");
+        velocidadeCs2Label.setText("Linear: " + String.format("%.2f", (velocidadeAngular2 * engrenagem2.raio)) + " Cm/s");
     }
 
     /** FIX CRUCIAL: Para o timer de animação e fecha a janela. */
