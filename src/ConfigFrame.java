@@ -14,17 +14,6 @@ public class ConfigFrame extends BaseFrame{
     public ConfigFrame(){
         super("Configuração da Simulação", 400, 500, Color.WHITE);
 
-        
-
-        //adicionar o icone
-        URL url = getClass().getResource("/icon/gearIcon.png");
-        if (url == null) {
-            System.err.println("ERRO: Ícone não encontrado no .jar!");
-        } else {
-            ImageIcon icon = new ImageIcon(url);
-            setIconImage(icon.getImage());
-        }
-
         //adicionar os inputs de configuraçao
         JLabel textoDentes1 = new JLabel("Dentes Engrenagem 1:");
         adicionarComponente(textoDentes1, 25, 50, 200, 30);
@@ -46,9 +35,14 @@ public class ConfigFrame extends BaseFrame{
         JTextField numDentes2Field = new JTextField();
         adicionarComponente(numDentes2Field, 250, 160, 25, 25);
 
+
         //configuraçoes do botao
         JButton startButton = new JButton("Iniciar Simulação");
         adicionarComponente(startButton, 25, 400, 150, 40);
+
+        //detectar enter para começar a simulação
+        getRootPane().setDefaultButton(startButton);
+
         startButton.addActionListener(e -> {
             //verificar se os valores sao validos
             verificarValores(numDentes1Field.getText(), Integer.class);
@@ -83,6 +77,12 @@ public class ConfigFrame extends BaseFrame{
 
             iniciarSimulacao();
         });
+
+        //botao para mostrar os créditos
+        JButton creditosButton = new JButton("...");
+        adicionarComponente(creditosButton, 300, 400, 30, 30);
+        creditosButton.addActionListener(ev -> abrirCreditosFrame());
+
 
         add(startButton);
 
@@ -126,6 +126,10 @@ public class ConfigFrame extends BaseFrame{
             // abre novamente
             new ConfigFrame();
         }
+    }
+
+    void abrirCreditosFrame(){
+        new Creditos();
     }
 
 }

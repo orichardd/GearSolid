@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.net.URL;
 
 public class BaseFrame extends JFrame {
     public BaseFrame(String title, int width, int height, Color bgColor) {
@@ -11,16 +12,32 @@ public class BaseFrame extends JFrame {
         setLayout(null);
         setResizable(false);
         getContentPane().setBackground(bgColor);
+
+        //adicionar ícone
+        URL url = getClass().getResource("/icon/gearIcon.png");
+        if (url == null) {
+            System.err.println("ERRO: Ícone não encontrado no .jar!");
+        } else {
+            ImageIcon icon = new ImageIcon(url);
+            setIconImage(icon.getImage());
+        }
     }
 
     public void adicionarComponente(JComponent componente, int x, int y, int largura, int altura) {
         componente.setBounds(x, y, largura, altura);
 
+
         if (componente instanceof JButton) {
             JButton botao = (JButton) componente;
-            botao.setBackground(Color.LIGHT_GRAY);
+            botao.setBackground(Color.BLACK);
             botao.setOpaque(true);
             botao.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+            botao.setFont(new Font("Arial", Font.BOLD, 15));
+            botao.setForeground(Color.WHITE);
+            botao.setBorderPainted(false);
+
+            botao.setBorder(new javax.swing.border.LineBorder(Color.GRAY, 1, false));
         }
         else if (componente instanceof JSlider) {
             JSlider slider = (JSlider) componente;

@@ -75,14 +75,6 @@ public class MainFrame extends BaseFrame {
 
         this.setResizable(true);
 
-        //adicionar o icone
-        URL url = getClass().getResource("/icon/gearIcon.png");
-        if (url == null) {
-            System.err.println("ERRO: Ícone não encontrado no .jar!");
-        } else {
-            ImageIcon icon = new ImageIcon(url);
-            setIconImage(icon.getImage());
-        }
 
         // --- 0. Initialize Variables and Base Values ---
         this.dentes1 = dentes1;
