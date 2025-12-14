@@ -1,4 +1,4 @@
-# Simulação de Engrenagens
+# GearSolid
 Uma ferramenta didática para visualizar o funcionamento de engrenagens sem necessidade de componentes físicos.
 
 O projeto foi feito com o objetivo de auxiliar no ensino de conceitos básicos de mecânica, permitindo que estudantes e entusiastas possam
